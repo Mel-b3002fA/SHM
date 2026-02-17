@@ -4,7 +4,7 @@
       --panel: #b9b9b900;
       --border: #b5b5b500;
       --accent: hsl(240, 100%, 87%);
-      --accent2: #f77e7e;
+      --accent2: #867ef7;
       --text: #00000000;
       --muted: #4a5270;
       --node: #cb1922;
@@ -73,6 +73,11 @@ transform: rotate(10deg)
       box-shadow: 0 8px 48px rgba(0,0,0,0.5);
     }
 
+
+    .shm{
+      display: flex;
+      justify-content: center;
+    }
     /* ── Info row ── */
     .info-row {
       display: flex;
