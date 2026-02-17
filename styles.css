@@ -19,7 +19,9 @@
       padding: 2rem 1rem;
       background-image: url(./img/bcferg.png);
       background-size: cover;
+      font-family: Poppins;
     }
+
 
 .landing-main{
         font-family: Pinyon Script;
@@ -90,7 +92,7 @@ transform: rotate(10deg)
     }
 
     .harmonic-label span {
-      font-family: 'DM Mono', monospace;
+      font-family: Poppins;
       font-size: 0.85rem;
       color: var(--muted);
       display: block;
