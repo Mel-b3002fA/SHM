@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SHM</title>
+  <link rel="stylesheet" href="./styles.css">
+
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Instrument+Serif:ital@0;1&family=MonteCarlo&family=Pinyon+Script&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+</head>
+<body class="body">
+
+<header class="landing">
+    <h1 class="landing-main">SHM</h1>
+    <p class="landing-para">In mechanics and physics, simple harmonic motion (sometimes abbreviated as SHM) is a special type of periodic motion an object experiences by means of a restoring force whose magnitude is directly proportional to the distance of the object from an equilibrium position and acts towards the equilibrium position. It results in an oscillation that is described by a sinusoid which continues indefinitely.</p>
+</header>
+
+<div class="card">
+  <div class="info-row">
+    <div class="harmonic-label">
+      <div id="nDisplay">1</div>
+      <span id="nameDisplay">Grundton (1. Harmonische)</span>
+    </div>
+    <div class="info-stats">
+      <div class="stat">Wellenlänge: <strong id="lambdaDisplay">2L</strong></div>
+      <div class="stat">Knoten: <strong id="nodesDisplay">0</strong></div>
+      <div class="stat">Bäuche: <strong id="antinodeDisplay">1</strong></div>
+      <div class="stat">Frequenz: <strong id="freqDisplay">f₁</strong></div>
+    </div>
+  </div>
+
+  <div class="canvas-wrap">
+    <canvas id="waveCanvas" height="130"></canvas>
+    <div class="canvas-labels">
+      <div class="lbl-0">0</div>
+      <div class="lbl-1">1</div>
+    </div>
+  </div>
+
+  <div class="slider-section">
+    <div class="slider-header">
+      <span>n = Harmonische</span>
+      <span id="sliderVal">n = 1</span>
+    </div>
+    <input type="range" id="nSlider" min="1" max="12" step="1" value="1" />
+    <div class="ticks" id="ticks"></div>
+  </div>
+
+  <div class="harmonics-grid" id="hGrid"></div>
+</div>
+
+<div class="footer-note">
+  Grauer Punkt = erster Schwingungsknoten bei Position 1/n
+</div>
+
+<script>
+  const canvas = document.getElementById('waveCanvas');
+  const ctx = canvas.getContext('2d');
+  const slider = document.getElementById('nSlider');
+
+  const names = [
+    '', // index 0 unused
+    'Grundton (1. Harmonische)',
+    'Oktave (2. Harmonische)',
+    'Quinte (3. Harmonische)',
+    'Doppel-Oktave (4. Harmonische)',
+    'Große Terz (5. Harmonische)',
+    'Kleine Terz (6. Harmonische)',
+    '7. Harmonische',
+    '8. Harmonische',
+    '9. Harmonische',
+    '10. Harmonische',
+    '11. Harmonische',
+    '12. Harmonische',
+  ];
+
+  const freqLabels = ['','f₁','2f₁','3f₁','4f₁','5f₁','6f₁','7f₁','8f₁','9f₁','10f₁','11f₁','12f₁'];
+
+  function lambdaLabel(n) {
+    if (n === 1) return '2L';
+    return `2L/${n}`;
+  }
+
+  let currentN = 1;
+  let animFrame;
+  let t = 0;
+
+  function resize() {
+    const rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width * window.devicePixelRatio;
+    canvas.height = 130 * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+
+  function draw(n) {
+    const W = canvas.width / window.devicePixelRatio;
+    const H = canvas.height / window.devicePixelRatio;
+    const cx = W / 2;
+    const cy = H / 2;
+    const PAD = 32;
+    const len = W - PAD * 2;
+    const amp = H * 0.38;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Subtle grid
+    ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(PAD, cy);
+    ctx.lineTo(W - PAD, cy);
+    ctx.stroke();
+
+    const phase = t * 0.04;
+
+    // Upper wave
+    ctx.beginPath();
+    for (let i = 0; i <= 500; i++) {
+      const x = PAD + (i / 500) * len;
+      const frac = i / 500;
+      const y = cy - amp * Math.sin(n * Math.PI * frac) * Math.abs(Math.cos(phase));
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    // Lower wave (mirror)
+    for (let i = 500; i >= 0; i--) {
+      const x = PAD + (i / 500) * len;
+      const frac = i / 500;
+      const y = cy + amp * Math.sin(n * Math.PI * frac) * Math.abs(Math.cos(phase));
+      ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+
+    // Wave fill
+    const grad = ctx.createLinearGradient(PAD, 0, W - PAD, 0);
+    grad.addColorStop(0, 'rgba(126,184,247,0.08)');
+    grad.addColorStop(0.5, 'rgba(126,184,247,0.14)');
+    grad.addColorStop(1, 'rgba(126,184,247,0.08)');
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // Wave stroke (upper)
+    ctx.beginPath();
+    for (let i = 0; i <= 600; i++) {
+      const x = PAD + (i / 600) * len;
+      const frac = i / 600;
+      const y = cy - amp * Math.sin(n * Math.PI * frac) * Math.abs(Math.cos(phase));
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#7eb8f7';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Wave stroke (lower)
+    ctx.beginPath();
+    for (let i = 0; i <= 600; i++) {
+      const x = PAD + (i / 600) * len;
+      const frac = i / 600;
+      const y = cy + amp * Math.sin(n * Math.PI * frac) * Math.abs(Math.cos(phase));
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#7eb8f7';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Knoten (nodes) as dots at x = k/n
+    const nodeR = 6;
+    for (let k = 1; k < n; k++) {
+      const nx = PAD + (k / n) * len;
+      // Outer glow
+      const grd = ctx.createRadialGradient(nx, cy, 0, nx, cy, nodeR * 2);
+      grd.addColorStop(0, 'rgba(247,201,126,0.4)');
+      grd.addColorStop(1, 'rgba(247,201,126,0)');
+      ctx.beginPath();
+      ctx.arc(nx, cy, nodeR * 2, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+      // Core dot
+      ctx.beginPath();
+      ctx.arc(nx, cy, nodeR * 0.75, 0, Math.PI * 2);
+      ctx.fillStyle = '#c8c8d0';
+      ctx.fill();
+      ctx.strokeStyle = '#a0a0b0';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Fraction label (first node only, as in image)
+      if (k === 1) {
+        ctx.font = `500 11px "DM Mono", monospace`;
+        ctx.fillStyle = '#a0a8c0';
+        ctx.textAlign = 'center';
+        ctx.fillText(`1/${n}`, nx, cy - nodeR - 8);
+      }
+    }
+
+    t++;
+  }
+
+  function animate() {
+    draw(currentN);
+    animFrame = requestAnimationFrame(animate);
+  }
+
+  function setN(n) {
+    currentN = n;
+    slider.value = n;
+    document.getElementById('nDisplay').textContent = n;
+    document.getElementById('nameDisplay').textContent = names[n] || `${n}. Harmonische`;
+    document.getElementById('sliderVal').textContent = `n = ${n}`;
+    document.getElementById('lambdaDisplay').textContent = lambdaLabel(n);
+    document.getElementById('nodesDisplay').textContent = n - 1;
+    document.getElementById('antinodeDisplay').textContent = n;
+    document.getElementById('freqDisplay').textContent = freqLabels[n] || `${n}f₁`;
+
+    // Update tick active
+    document.querySelectorAll('.tick').forEach(t => {
+      t.classList.toggle('active', parseInt(t.dataset.val) === n);
+    });
+    // Update button active
+    document.querySelectorAll('.h-btn').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.val) === n);
+    });
+  }
+
+  // Build ticks
+  const ticksEl = document.getElementById('ticks');
+  for (let i = 1; i <= 12; i++) {
+    const d = document.createElement('div');
+    d.className = 'tick' + (i === 1 ? ' active' : '');
+    d.dataset.val = i;
+    d.textContent = i;
+    d.addEventListener('click', () => setN(i));
+    ticksEl.appendChild(d);
+  }
+
+  // Build harmonic buttons
+  const grid = document.getElementById('hGrid');
+  for (let i = 1; i <= 12; i++) {
+    const b = document.createElement('button');
+    b.className = 'h-btn' + (i === 1 ? ' active' : '');
+    b.dataset.val = i;
+    const shortName = ['','Fund.','Okt.','Quinte','2×Okt.','Gr.Terz','Kl.Terz','7.H','8.H','9.H','10.H','11.H','12.H'][i];
+    b.innerHTML = `n=${i}<span class="fraction">${shortName}</span>`;
+    b.addEventListener('click', () => setN(i));
+    grid.appendChild(b);
+  }
+
+  slider.addEventListener('input', () => setN(parseInt(slider.value)));
+
+  window.addEventListener('resize', () => {
+    resize();
+  });
+
+  resize();
+  animate();
+</script>
+</body>
+</html>

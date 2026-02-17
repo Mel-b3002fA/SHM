@@ -1,0 +1,260 @@
+
+    :root {
+      --bg: #d4d4d400;
+      --panel: #b9b9b900;
+      --border: #b5b5b500;
+      --accent: hsl(240, 100%, 87%);
+      --accent2: #f77e7e;
+      --text: #00000000;
+      --muted: #4a5270;
+      --node: #cb1922;
+      --wave: #bfbfff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      padding: 2rem 1rem;
+      background-image: url(./img/bcferg.png);
+      background-size: cover;
+    }
+
+    .landing-main{
+        font-family: Pinyon Script;
+        font-weight: 500;
+        color: #bfbfff;
+        font-size: 260px;
+        padding-left: 3vw;
+        padding-top: 70px;
+        line-height: 80%;
+    }
+
+    .landing-para{
+        color: #9292fe;
+        font-family: poppins;
+        letter-spacing: -1px;
+        font-weight: 200;
+        font-size: 13px;
+        padding-left: 3vw;
+        width: 60vw;
+    }
+    
+
+
+    .card {
+      background: var(--panel);
+      margin-top: 100vh;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem 2.5rem;
+      width: 100%;
+      max-width: 780px;
+      box-shadow: 0 8px 48px rgba(0,0,0,0.5);
+    }
+
+    /* ── Info row ── */
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 1.6rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .harmonic-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.6rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .harmonic-label span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: block;
+      margin-top: 0.2rem;
+      letter-spacing: 0.1em;
+    }
+
+    .info-stats {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.4rem;
+    }
+
+    .stat {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .stat strong {
+      color: var(--accent2);
+      font-weight: 500;
+    }
+
+    /* ── Canvas ── */
+    .canvas-wrap {
+      position: relative;
+      background: #0a0c11;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-bottom: 1.8rem;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+    }
+
+    .canvas-labels {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+    }
+
+    .canvas-labels .lbl-0 {
+      position: absolute;
+      left: 10px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    .canvas-labels .lbl-1 {
+      position: absolute;
+      right: 10px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+
+    /* ── Slider ── */
+    .slider-section {
+      margin-bottom: 1.6rem;
+    }
+
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.7rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    input[type=range] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      position: relative;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--accent);
+      cursor: grab;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    input[type=range]::-webkit-slider-thumb:active {
+      cursor: grabbing;
+      transform: scale(1.25);
+      box-shadow: 0 0 0 4px rgba(126,184,247,0.3);
+    }
+
+    input[type=range]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 3px solid var(--bg);
+      cursor: grab;
+    }
+
+    /* Tick marks */
+    .ticks {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 6px 0;
+    }
+
+    .tick {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-align: center;
+      cursor: pointer;
+      transition: color 0.15s;
+      min-width: 20px;
+    }
+
+    .tick:hover { color: var(--accent); }
+    .tick.active { color: var(--accent); font-weight: 500; }
+
+    /* ── Harmonics grid ── */
+    .harmonics-grid {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .h-btn {
+      flex: 1;
+      min-width: 38px;
+      padding: 0.5rem 0.3rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: center;
+    }
+
+    .h-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .h-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
+    }
+
+    .h-btn .fraction {
+      display: block;
+      font-size: 0.6rem;
+      margin-top: 2px;
+      opacity: 0.7;
+    }
+
+    /* ── Footer note ── */
+    .footer-note {
+      margin-top: 1.8rem;
+      font-size: 0.68rem;
+      color: var(--muted);
+      text-align: center;
+      letter-spacing: 0.05em;
+    }
