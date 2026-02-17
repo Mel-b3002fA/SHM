@@ -21,25 +21,42 @@
       background-size: cover;
     }
 
-    .landing-main{
+.landing-main{
         font-family: Pinyon Script;
         font-weight: 500;
         color: #bfbfff;
         font-size: 260px;
         padding-left: 3vw;
         padding-top: 70px;
+        padding-bottom: 20px;
         line-height: 80%;
-    }
+        position: relative;
+}
 
-    .landing-para{
+.landing-para{
         color: #9292fe;
         font-family: poppins;
         letter-spacing: -1px;
         font-weight: 200;
         font-size: 13px;
         padding-left: 3vw;
-        width: 60vw;
-    }
+        width: 76vw;
+}
+
+
+.landing-btn{
+  color: #ffffff;
+  font-family: Pinyon Script;
+text-align: center;
+border-radius: 50%;
+  padding: 10px 40px;
+  width: fit-content;
+  background-color: #bfbfff;
+  top: 500px;
+  left: 1030px;
+  position: absolute;
+transform: rotate(10deg)
+}
     
 
 
