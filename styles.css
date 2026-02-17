@@ -64,7 +64,7 @@ transform: rotate(10deg)
 
     .card {
       background: var(--panel);
-      margin-top: 100vh;
+      margin-top: 25vh;
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 2rem 2.5rem;
