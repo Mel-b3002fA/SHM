@@ -30,10 +30,10 @@
       <span id="nameDisplay">Grundton (1. Harmonische)</span>
     </div>
     <div class="info-stats">
-      <div class="stat">Wellenlänge: <strong id="lambdaDisplay">2L</strong></div>
-      <div class="stat">Knoten: <strong id="nodesDisplay">0</strong></div>
-      <div class="stat">Bäuche: <strong id="antinodeDisplay">1</strong></div>
-      <div class="stat">Frequenz: <strong id="freqDisplay">f₁</strong></div>
+      <div class="stat">Wave lenght λ:<strong id="lambdaDisplay">2L</strong></div>
+      <div class="stat">Nodes: <strong id="nodesDisplay">0</strong></div>
+      <div class="stat">Antinodes: <strong id="antinodeDisplay">1</strong></div>
+      <div class="stat">Frequency ƒ: <strong id="freqDisplay">f₁</strong></div>
     </div>
   </div>
 
@@ -47,7 +47,7 @@
 
   <div class="slider-section">
     <div class="slider-header">
-      <span>n = Harmonische</span>
+
       <span id="sliderVal">n = 1</span>
     </div>
     <input type="range" id="nSlider" min="1" max="12" step="1" value="1" />
@@ -68,18 +68,18 @@
 
   const names = [
     '', // index 0 unused
-    'Grundton (1. Harmonische)',
-    'Oktave (2. Harmonische)',
-    'Quinte (3. Harmonische)',
-    'Doppel-Oktave (4. Harmonische)',
-    'Große Terz (5. Harmonische)',
-    'Kleine Terz (6. Harmonische)',
-    '7. Harmonische',
-    '8. Harmonische',
-    '9. Harmonische',
-    '10. Harmonische',
-    '11. Harmonische',
-    '12. Harmonische',
+    '1. Harmonic motion',
+    '2. Harmonic motion',
+    '3. Harmonic motion',
+    '4. Harmonic motion',
+    '5. Harmonic motion',
+    '6. Harmonic motion',
+    '7. Harmonic motion',
+    '8. Harmonic motion',
+    '9. Harmonic motion',
+    '10. Harmonic motion',
+    '11. Harmonic motion',
+    '12. Harmonic motion',
   ];
 
   const freqLabels = ['','f₁','2f₁','3f₁','4f₁','5f₁','6f₁','7f₁','8f₁','9f₁','10f₁','11f₁','12f₁'];
@@ -213,7 +213,7 @@
     currentN = n;
     slider.value = n;
     document.getElementById('nDisplay').textContent = n;
-    document.getElementById('nameDisplay').textContent = names[n] || `${n}. Harmonische`;
+    document.getElementById('nameDisplay').textContent = names[n] || `${n}. Harmonic motion`;
     document.getElementById('sliderVal').textContent = `n = ${n}`;
     document.getElementById('lambdaDisplay').textContent = lambdaLabel(n);
     document.getElementById('nodesDisplay').textContent = n - 1;
