@@ -1,3 +1,5 @@
+Styles no thumb · CSS
+Copy
 
     :root {
       --bg: #d4d4d400;
@@ -187,31 +189,22 @@ transform: rotate(10deg)
       position: relative;
     }
 
+    /* HIDE THE SLIDER THUMB COMPLETELY */
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 3px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--accent);
-      cursor: grab;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-
-    input[type=range]::-webkit-slider-thumb:active {
-      cursor: grabbing;
-      transform: scale(1.25);
-      box-shadow: 0 0 0 4px rgba(126,184,247,0.3);
+      width: 0;
+      height: 0;
+      opacity: 0;
+      pointer-events: none;
     }
 
     input[type=range]::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 3px solid var(--bg);
-      cursor: grab;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      border: none;
+      background: transparent;
+      pointer-events: none;
     }
 
     /* Tick marks */
@@ -231,7 +224,6 @@ transform: rotate(10deg)
     }
 
     .tick:hover { color: var(--accent); }
-    .tick.active { color: var(--accent); font-weight: 500; }
 
     /* ── Harmonics grid ── */
     .harmonics-grid {
@@ -261,9 +253,7 @@ transform: rotate(10deg)
     }
 
     .h-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--bg);
+      color: var(--accent);
       font-weight: 500;
     }
 
@@ -282,3 +272,9 @@ transform: rotate(10deg)
       text-align: center;
       letter-spacing: 0.05em;
     }
+
+
+
+
+
+
